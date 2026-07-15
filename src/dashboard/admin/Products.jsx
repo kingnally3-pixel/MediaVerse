@@ -2,16 +2,12 @@ import { useEffect, useState } from "react";
 
 import ProductForm from "./components/ProductForm";
 
-import {
-  deleteProduct,
-  getProducts,
-} from "../../utils/localDatabase";
-
+import productService from "../../services/productService";
 export default function Products() {
   const [products, setProducts] = useState([]);
 
   function loadProducts() {
-    setProducts(getProducts());
+    setProducts(productService.getAll());
   }
 
   useEffect(() => {
@@ -44,13 +40,19 @@ export default function Products() {
 
             <button
               onClick={() => {
-                deleteProduct(product.id);
+                productService.remove(product.id);
+
                 loadProducts();
               }}
               className="rounded bg-red-600 px-4 py-2"
             >
               Delete
             </button>
+            <button
+    className="rounded bg-yellow-500 px-4 py-2"
+>
+    Edit
+</button>
           </div>
         ))}
       </div>
